@@ -1,3 +1,4 @@
+/*global WaveSurfer:true*/
 'use strict';
 
 // Create an instance
@@ -6,10 +7,10 @@ var wavesurfer = Object.create(WaveSurfer);
 // Init & load
 document.addEventListener('DOMContentLoaded', function() {
   var options = {
-    container   : '#waveform',
-    waveColor   : 'black',
-    interact    : false,
-    cursorWidth   : 0
+    container: '#waveform',
+    waveColor: 'black',
+    interact: false,
+    cursorWidth: 0
   };
   var micBtn = document.querySelector('#micBtn');
 
