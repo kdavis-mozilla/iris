@@ -16,5 +16,11 @@
     "app": {
       "background": {"scripts": ["js/background.js"]}
     },
-    "offline_enabled": false
+    "offline_enabled": false,
+    "default_locale": "en",
+     "permissions": {
+        "audio-capture" : {
+          "description" : "Audio capture"
+        }
+      }
 }
