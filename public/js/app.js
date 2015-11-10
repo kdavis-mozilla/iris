@@ -8,9 +8,12 @@ var wavesurfer = Object.create(WaveSurfer);
 document.addEventListener('DOMContentLoaded', function() {
   var options = {
     container: '#waveform',
-    waveColor: 'black',
+    waveColor: 'red',
     interact: false,
-    cursorWidth: 0
+    cursorWidth: 0,
+    barWidth: 1,
+    pixelRatio: 1,
+    hideScrollbar: true
   };
   var micBtn = document.querySelector('#micBtn');
 
