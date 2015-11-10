@@ -1,4 +1,4 @@
-<projectName "WebApplate">
+<projectName "iris">
 <hello "Hello {{ projectName }}">
 <info_static "The <mark>index.html</mark> file is located in <mark>public/index.html</mark>. Check <a href='https://github.com/webapplate/webapplate/wiki'>{{ projectName }} wiki</a> for more information">
 <info_dynamic "The <mark>index.html</mark> file is located in <mark>views/index.html</mark>. Check <a href='https://github.com/webapplate/webapplate/wiki'>{{ projectName }} wiki</a> for more information">
