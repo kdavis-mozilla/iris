@@ -11,8 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     waveColor: 'red',
     interact: false,
     cursorWidth: 0,
-    barWidth: 1,
-    hideScrollbar: true
+    barWidth: 5,
+    hideScrollbar: true,
+    height: 250
   };
   var micBtn = document.querySelector('#micBtn');
 
