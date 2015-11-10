@@ -1,10 +1,10 @@
 {
-    "name": "Web App",
-    "description": "Web App Description",
+    "name": "iris",
+    "description": "speech demo",
     "version": "1.0.0",
     "developer": {
-        "name": "Your Name",
-        "url": "https://github.com/gasolin/webapplate"
+        "name": "Kelly Davis",
+        "url": "https://github.com/kdavis-mozilla/iris"
     },
     "icons":{
         "60": "/style/icons/apple-touch-icon-precomposed.png",
