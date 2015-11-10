@@ -7,5 +7,17 @@ body { padding-top: 50px; }
   body { padding-top: 50px; }
 }
 
+#waveform {
+    position: relative;
+}
+
 .navbar { margin-bottom: 0; }
 
+.controls {
+    padding: 30px 0 15px;
+    text-align: center;
+}
+
+.controls .btn {
+    margin-bottom: 15px;
+}

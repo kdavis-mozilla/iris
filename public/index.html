@@ -46,6 +46,13 @@ Exchange the line above for this to enable offline support
       gremlins.createHorde().unleash();
     </script>
     -->
+
+    <!-- wavesurfer.js -->
+    <script src="vendor/wavesurfer.js/dist/wavesurfer.min.js"></script>
+    <!-- microphone renderer -->
+    <script src="vendor/wavesurfer.js/plugin/wavesurfer.microphone.js"></script>
+    <!-- App -->
+    <script src="js/app.js"></script>
   </head>
   <body fullbleed unresolved class="hidden">
     <header id="header" class="navbar navbar-fixed-top shadow-z-3">
@@ -55,7 +62,19 @@ Exchange the line above for this to enable offline support
     </header>
     <section id="content" class="well">
       <!-- Add your site or application content here -->
-      <h3 data-l10n-id="hello"></h3>
+      <div id="demo">
+        <div id="waveform"></div>
+        <div class="controls">
+          <button id="micBtn" class="btn btn-primary" data-action="start">
+            Microphone:
+            <i class="glyphicon glyphicon-play"></i>
+            Start
+            /
+            <i class="glyphicon glyphicon-stop"></i>
+            Stop
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- build:js js/body.min.js -->
