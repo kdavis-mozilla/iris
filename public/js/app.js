@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     interact: false,
     cursorWidth: 0,
     barWidth: 1,
-    pixelRatio: 1,
     hideScrollbar: true
   };
   var micBtn = document.querySelector('#micBtn');
