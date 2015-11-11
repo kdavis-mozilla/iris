@@ -21,7 +21,12 @@
     init: function() {
       document.body.classList.remove('hidden');
 
-      // Create an instance
+      // Initialize WaveSurfer
+      this.initWaveSurfer();
+    },
+
+    initWaveSurfer: function() {
+      // Create WaveSurfer instance
       this.wavesurfer = Object.create(WaveSurfer);
 
       // Create WaveSurfer options
