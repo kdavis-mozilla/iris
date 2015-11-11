@@ -17,13 +17,13 @@ body {
   }
 }
 
-#waveform {
+.waveform {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
 }
 
-#content {
+.well {
   height:100%;
 }
 
