@@ -25,6 +25,15 @@ body {
     transform: translateY(-50%);
 }
 
+.textbox {
+    position: absolute;
+    text-align: center;
+    width: 90%;
+    bottom: 0;
+    height: 10%;
+    transform: translateY(-100%);
+}
+
 .well {
   height:100%;
 }
