@@ -1,4 +1,4 @@
-/* global $ */
+/* global WaveSurfer:true*/
 /**
  * Main entry point.
  *
@@ -20,24 +20,47 @@
   var App = {
     init: function() {
       document.body.classList.remove('hidden');
-      // $.material.ripples();
-      // document.addEventListener('deviceready',
-      //  this.onDeviceReady, false); // cordova ready
 
-      /*
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js', {scope: './'})
-          .then(function(registration) {
-            console.log('ServiceWorker registration successful ' +
-            'with scope: ', registration.scope);
-          })
-          .catch(function(err) {
-            console.log('ServiceWorker registration failed: ', err);
-          });
-      } else {
-        console.warn('Service workers aren\'t supported in this browser.');
-      }
-      */
+      // Create an instance
+      this.wavesurfer = Object.create(WaveSurfer);
+
+      // Create WaveSurfer options
+      var options = {
+        container: '#waveform',
+        waveColor: 'red',
+        interact: false,
+        cursorWidth: 0,
+        barWidth: 5,
+        hideScrollbar: true,
+        height: 250
+      };
+
+      // Obtain micBtn
+      var micBtn = document.querySelector('#micBtn');
+
+      // Init wavesurfer
+      this.wavesurfer.init(options);
+
+      // Init Microphone plugin
+      var microphone = Object.create(WaveSurfer.Microphone);
+      microphone.init({
+        wavesurfer: this.wavesurfer
+      });
+      microphone.on('deviceReady', function() {
+        console.info('Device ready!');
+      });
+      microphone.on('deviceError', function(code) {
+        console.warn('Device error: ' + code);
+      });
+
+      // start/stop mic on button click
+      micBtn.onclick = function() {
+        if (microphone.active) {
+          microphone.stop();
+        } else {
+          microphone.start();
+        }
+      };
     }
   };
 
