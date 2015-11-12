@@ -81,7 +81,8 @@
       // Create Transcription to hold spoken text
       var tt = new Transcription();
 
-      // Obtain textbox
+      // Obtain dom elements
+      var micBtn = document.querySelector('#micBtn');
       var textbox = document.querySelector('#textbox');
 
       // Create Dictate for speech-to-text
@@ -90,14 +91,21 @@
         serverStatus: 'ws://bark.phon.ioc.ee:82/english/duplex-speech-api/ws/status',
         recorderWorkerPath: 'vendor/dictate.js/lib/recorderWorker.js',
         onReadyForSpeech: function() {
+          // Note: Called upon completion of dictate.startListening()
+          micBtn.disabled = true;
           console.info('Ready for speech');
         },
         onEndOfSpeech: function() {
-          // Note: Called upon completion of dictate.startListening()
+          micBtn.disabled = false;
+          micBtn.click();
           console.info('End of speech');
         },
         onEndOfSession: function() {
           // TODO: Properly integrate this into the state machine
+          if (micBtn.disabled) {
+            micBtn.disabled = false;
+            micBtn.click();
+          }
           console.info('End of session');
         },
         onPartialResults: function(hypos) {
@@ -108,10 +116,13 @@
         },
         onResults: function(hypos) {
           // TODO: Generalize to the case where there are more results
+          // TODO: Properly integrate this into the state machine
           tt.add(hypos[0].transcript, true);
           console.info('onResults: ' + tt.toString());
           textbox.innerHTML = tt.toString();
           tt = new Transcription();
+          micBtn.disabled = false;
+          micBtn.click();
         },
         onError: function(code, data) {
           // TODO: Properly integrate this into the state machine
@@ -119,6 +130,7 @@
           dictate.cancel();
         },
         onEvent: function(code, data) {
+          console.warn('EVENT: ' + code + ': ' + (data || ''));
           console.info(code, data);
         }
       });
