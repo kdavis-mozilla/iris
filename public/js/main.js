@@ -93,7 +93,7 @@
           console.info('Ready for speech');
         },
         onEndOfSpeech: function() {
-          // TODO: Properly integrate this into the state machine
+          // Note: Called upon completion of dictate.startListening()
           console.info('End of speech');
         },
         onEndOfSession: function() {
