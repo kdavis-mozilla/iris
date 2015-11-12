@@ -48,8 +48,9 @@
       // Init wavesurfer
       wavesurfer.init(options);
 
-      // Obtain micBtn
+      // Obtain dom elements
       var micBtn = document.querySelector('#micBtn');
+      var textbox = document.querySelector('#textbox');
 
       // Init Microphone plugin
       var microphone = Object.create(WaveSurfer.Microphone);
@@ -70,6 +71,7 @@
           dictate.stopListening();
         } else {
           microphone.start();
+          textbox.innerHTML = '';
           dictate.startListening();
         }
       };
