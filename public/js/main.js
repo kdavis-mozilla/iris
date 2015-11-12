@@ -85,6 +85,7 @@
       // Create Dictate for speech-to-text
       var dictate = new Dictate({
         server: 'ws://bark.phon.ioc.ee:82/english/duplex-speech-api/ws/speech',
+        serverStatus: 'ws://bark.phon.ioc.ee:82/english/duplex-speech-api/ws/status',
         recorderWorkerPath: 'vendor/dictate.js/lib/recorderWorker.js',
         onReadyForSpeech: function() {
           console.info('Ready for speech');
