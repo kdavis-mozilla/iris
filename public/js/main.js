@@ -104,7 +104,6 @@
           // TODO: Properly integrate this into the state machine
           if (micBtn.disabled) {
             micBtn.disabled = false;
-            micBtn.click();
           }
           console.info('End of session');
         },
@@ -130,8 +129,7 @@
           dictate.cancel();
         },
         onEvent: function(code, data) {
-          console.warn('EVENT: ' + code + ': ' + (data || ''));
-          console.info(code, data);
+          console.info('EVENT: ' + code + ': ' + (data || ''));
         }
       });
 
