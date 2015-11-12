@@ -93,9 +93,11 @@
           console.info('Ready for speech');
         },
         onEndOfSpeech: function() {
+          // TODO: Properly integrate this into the state machine
           console.info('End of speech');
         },
         onEndOfSession: function() {
+          // TODO: Properly integrate this into the state machine
           console.info('End of session');
         },
         onPartialResults: function(hypos) {
@@ -112,6 +114,7 @@
           tt = new Transcription();
         },
         onError: function(code, data) {
+          // TODO: Properly integrate this into the state machine
           console.warn('ERR: ' + code + ': ' + (data || ''));
           dictate.cancel();
         },
