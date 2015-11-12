@@ -50,3 +50,11 @@ body {
 .controls .btn {
     margin-bottom: 5px;
 }
+
+#play {
+    display: block;
+}
+
+#stop {
+    display: none;
+}

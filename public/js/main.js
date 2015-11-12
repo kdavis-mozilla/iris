@@ -49,6 +49,8 @@
       wavesurfer.init(options);
 
       // Obtain dom elements
+      var play = document.querySelector('#play');
+      var stop = document.querySelector('#stop');
       var micBtn = document.querySelector('#micBtn');
       var textbox = document.querySelector('#textbox');
 
@@ -66,13 +68,17 @@
 
       // start/stop mic on button click
       micBtn.onclick = function() {
+        console.info('dictate.isConnected: ' + dictate.isConnected);
+        if (dictate.isConnected) {
+          dictate.stopListening();
+        } else {
+          dictate.startListening();
+        }
         if (microphone.active) {
           microphone.stop();
-          dictate.stopListening();
         } else {
           microphone.start();
           textbox.innerHTML = '';
-          dictate.startListening();
         }
       };
     },
@@ -82,6 +88,8 @@
       var tt = new Transcription();
 
       // Obtain dom elements
+      var play = document.querySelector('#play');
+      var stop = document.querySelector('#stop');
       var micBtn = document.querySelector('#micBtn');
       var textbox = document.querySelector('#textbox');
 
@@ -91,21 +99,35 @@
         serverStatus: 'ws://bark.phon.ioc.ee:82/english/duplex-speech-api/ws/status',
         recorderWorkerPath: 'vendor/dictate.js/lib/recorderWorker.js',
         onReadyForSpeech: function() {
-          // Note: Called upon completion of dictate.startListening()
-          micBtn.disabled = true;
+          // TODO: Properly integrate this into the state machine
+          dictate.isConnected = true;
+          play.style.display = 'none';
+          stop.style.display = 'block';
+          micBtn.disabled = false;
           console.info('Ready for speech');
         },
         onEndOfSpeech: function() {
-          micBtn.disabled = false;
-          micBtn.click();
+          // TODO: Properly integrate this into the state machine
+          play.style.display = 'block';
+          stop.style.display = 'none';
+          micBtn.disabled = true;
           console.info('End of speech');
         },
         onEndOfSession: function() {
           // TODO: Properly integrate this into the state machine
-          if (micBtn.disabled) {
+          dictate.isConnected = false;
+          play.style.display = 'block';
+          stop.style.display = 'none';
+          micBtn.disabled = false;
+          console.info('End of session');
+        },
+        onServerStatus: function(json) {
+          // TODO: Properly integrate this into the state machine
+          if (json.num_workers_available == 0 && !dictate.isConnected) {
+            micBtn.disabled = true;
+          }  else {
             micBtn.disabled = false;
           }
-          console.info('End of session');
         },
         onPartialResults: function(hypos) {
           // TODO: Generalize to the case where there are more results
@@ -114,24 +136,25 @@
           textbox.innerHTML = tt.toString();
         },
         onResults: function(hypos) {
-          // TODO: Generalize to the case where there are more results
           // TODO: Properly integrate this into the state machine
+          // TODO: Generalize to the case where there are more results
           tt.add(hypos[0].transcript, true);
           console.info('onResults: ' + tt.toString());
           textbox.innerHTML = tt.toString();
           tt = new Transcription();
-          micBtn.disabled = false;
-          micBtn.click();
         },
         onError: function(code, data) {
           // TODO: Properly integrate this into the state machine
-          console.warn('ERR: ' + code + ': ' + (data || ''));
           dictate.cancel();
+          console.warn('ERROR: ' + code + ': ' + (data || ''));
         },
         onEvent: function(code, data) {
           console.info('EVENT: ' + code + ': ' + (data || ''));
         }
       });
+
+      // Init dictate.isConnected
+      dictate.isConnected = false;
 
       // Init Dictate
       dictate.init();
