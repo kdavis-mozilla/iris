@@ -24,13 +24,13 @@
       document.body.classList.remove('hidden');
 
       // Initialize dictate.js
-      var dictate = this.initDictate();
+      this.initDictate();
 
       // Initialize WaveSurfer
-      this.initWaveSurfer(dictate);
+      this.initWaveSurfer();
     },
 
-    initWaveSurfer: function(dictate) {
+    initWaveSurfer: function() {
       // Create WaveSurfer instance
       var wavesurfer = Object.create(WaveSurfer);
 
@@ -49,8 +49,6 @@
       wavesurfer.init(options);
 
       // Obtain dom elements
-      var play = document.querySelector('#play');
-      var stop = document.querySelector('#stop');
       var micBtn = document.querySelector('#micBtn');
       var textbox = document.querySelector('#textbox');
 
@@ -68,11 +66,11 @@
 
       // start/stop mic on button click
       micBtn.onclick = function() {
-        console.info('dictate.isConnected: ' + dictate.isConnected);
-        if (dictate.isConnected) {
-          dictate.stopListening();
+        console.info('dictate.isConnected: ' + App.dictate.isConnected);
+        if (App.dictate.isConnected) {
+          App.dictate.stopListening();
         } else {
-          dictate.startListening();
+          App.dictate.startListening();
         }
         if (microphone.active) {
           microphone.stop();
@@ -90,40 +88,40 @@
       // Obtain dom elements
       var play = document.querySelector('#play');
       var stop = document.querySelector('#stop');
+      var refresh = document.querySelector('#refresh');
       var micBtn = document.querySelector('#micBtn');
       var textbox = document.querySelector('#textbox');
 
       // Create Dictate for speech-to-text
-      var dictate = new Dictate({
+      App.dictate = new Dictate({
         server: 'ws://bark.phon.ioc.ee:82/english/duplex-speech-api/ws/speech',
         serverStatus: 'ws://bark.phon.ioc.ee:82/english/duplex-speech-api/ws/status',
         recorderWorkerPath: 'vendor/dictate.js/lib/recorderWorker.js',
         onReadyForSpeech: function() {
-          // TODO: Properly integrate this into the state machine
-          dictate.isConnected = true;
+          App.dictate.isConnected = true;
           play.style.display = 'none';
           stop.style.display = 'block';
+          refresh.style.display = 'none';
           micBtn.disabled = false;
           console.info('Ready for speech');
         },
         onEndOfSpeech: function() {
-          // TODO: Properly integrate this into the state machine
-          play.style.display = 'block';
+          play.style.display = 'none';
           stop.style.display = 'none';
+          refresh.style.display = 'block';
           micBtn.disabled = true;
           console.info('End of speech');
         },
         onEndOfSession: function() {
-          // TODO: Properly integrate this into the state machine
-          dictate.isConnected = false;
+          App.dictate.isConnected = false;
           play.style.display = 'block';
           stop.style.display = 'none';
+          refresh.style.display = 'none';
           micBtn.disabled = false;
           console.info('End of session');
         },
         onServerStatus: function(json) {
-          // TODO: Properly integrate this into the state machine
-          if (json.num_workers_available == 0 && !dictate.isConnected) {
+          if (json.num_workers_available == 0 && !App.dictate.isConnected) {
             micBtn.disabled = true;
           }  else {
             micBtn.disabled = false;
@@ -136,7 +134,6 @@
           textbox.innerHTML = tt.toString();
         },
         onResults: function(hypos) {
-          // TODO: Properly integrate this into the state machine
           // TODO: Generalize to the case where there are more results
           tt.add(hypos[0].transcript, true);
           console.info('onResults: ' + tt.toString());
@@ -144,8 +141,7 @@
           tt = new Transcription();
         },
         onError: function(code, data) {
-          // TODO: Properly integrate this into the state machine
-          dictate.cancel();
+          App.dictate.cancel();
           console.warn('ERROR: ' + code + ': ' + (data || ''));
         },
         onEvent: function(code, data) {
@@ -154,13 +150,10 @@
       });
 
       // Init dictate.isConnected
-      dictate.isConnected = false;
+      App.dictate.isConnected = false;
 
       // Init Dictate
-      dictate.init();
-
-      // Return dictate
-      return dictate;
+      App.dictate.init();
     }
   };
 

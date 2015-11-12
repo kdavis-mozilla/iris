@@ -58,3 +58,7 @@ body {
 #stop {
     display: none;
 }
+
+#refresh {
+    display: none;
+}
