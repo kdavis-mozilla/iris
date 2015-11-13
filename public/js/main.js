@@ -94,8 +94,12 @@
 
       // Create Dictate for speech-to-text
       App.dictate = new Dictate({
-        server: 'ws://bark.phon.ioc.ee:82/english/duplex-speech-api/ws/speech',
-        serverStatus: 'ws://bark.phon.ioc.ee:82/english/duplex-speech-api/ws/status',
+        server: 'ws://52.27.131.95:8888/client/ws/speech',
+        serverStatus: 'ws://52.27.131.95:8888/client/ws/status',
+        referenceHandler: 'ws://52.27.131.95:8888/client/dynamic/reference',
+        contentType: 'content-type=audio/x-raw,+layout=(string)interleaved,+' +
+                     'rate=(int)16000,+format=(string)S16LE,+channels=(int)1',
+        interval: 250,
         recorderWorkerPath: 'vendor/dictate.js/lib/recorderWorker.js',
         onReadyForSpeech: function() {
           App.dictate.isConnected = true;
