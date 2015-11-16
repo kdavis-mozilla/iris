@@ -94,10 +94,7 @@
 
       // Create Dictate for speech-to-text
       App.dictate = new Dictate({
-        wavRecorderWorkerPath:
-          'vendor/recordermp3.js/js/enc/wav/recorderWorker.js',
-        mp3RecorderWorkerPath:
-          'vendor/recordermp3.js/js/enc/mp3/mp3Worker.js',
+        mp3RecorderWorkerPath: 'vendor/recordermp3.js/js/enc/mp3/mp3Worker.js',
         onReadyForSpeech: function() {
           App.dictate.isConnected = true;
           play.style.display = 'none';
