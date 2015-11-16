@@ -18,6 +18,6 @@
     "gremlins.js": "^0.1.0",
     "fetch": "^0.10.1",
     "wavesurfer.js": "~1.0.47",
-    "dictatemp3.js": "~1.1.0"
+    "dictatemp3.js": "~1.2.0"
   }
 }
