@@ -94,10 +94,10 @@
 
       // Create Dictate for speech-to-text
       App.dictate = new Dictate({
-        server: 'ws://52.27.131.95:8888/client/ws/speech',
-        serverStatus: 'ws://52.27.131.95:8888/client/ws/status',
-        referenceHandler: 'ws://52.27.131.95:8888/client/dynamic/reference',
-        interval: 250,
+        wavRecorderWorkerPath:
+          'vendor/recordermp3.js/js/enc/wav/recorderWorker.js',
+        mp3RecorderWorkerPath:
+          'vendor/recordermp3.js/js/enc/mp3/mp3Worker.js',
         onReadyForSpeech: function() {
           App.dictate.isConnected = true;
           play.style.display = 'none';
