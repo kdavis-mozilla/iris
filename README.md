@@ -1,60 +1,82 @@
-![project logo](https://raw.github.com/webapplate/webapplate/master/public/style/icons/icon128.png)
+![project logo](https://github.com/kdavis-mozilla/iris/blob/master/public/style/icons/icon128.png)
 
-# Webapplate
+# iris
 
-The template to create a maintainable web app. For your server, client, Android/iOS/FxOS or desktop projects.
+Demo WebApp using [kaldi](http://kaldi-asr.org/) DNN STT along with [api.ai](https://api.ai/).
 
-Before hacking with webapplate, Try it with [jsfiddle playground](http://jsfiddle.net/gasolin/sxjja37j/)! Or you can fork [ghapplate](https://github.com/webapplate/ghapplate) to experience web app directly on github! Webapplate is the most maintainable choice which allows you write with future proved javascript and css and trans-compile to current working code.
+This is a demo webapp that uses a server based [kaldi](http://kaldi-asr.org/) deep neural network speech-to-text engine to convert speech to text, and takes the resulting text and passes it to the [api.ai](https://api.ai/) backend to answer any queries possed by the text.
 
-[![Build Status](https://travis-ci.org/webapplate/webapplate.png)](https://travis-ci.org/webapplate/webapplate) [![Dependency Status](https://gemnasium.com/webapplate/webapplate.svg)](https://gemnasium.com/webapplate/webapplate) [![Code Climate](https://codeclimate.com/github/webapplate/webapplate.png)](https://codeclimate.com/github/webapplate/webapplate) [![Codacy Badge](https://www.codacy.com/project/badge/b0dbc808c4fb83b26706fb376ceea678)](https://www.codacy.com/public/gasolin_1667/webapplate)
+## Rapid, but not Quick, Setup
 
-current version: v3.2.0
+### Setting up iris
 
-* Project page http://webapplate.github.io/
-* Follow [Setup Instruction](https://github.com/webapplate/webapplate/wiki/Setup-Instruction) to setup the webpplate project.
-* More Guides
-  * Learn more from [webapplate document](https://github.com/webapplate/webapplate/wiki).
-  * [Webapplate introduction](https://hacks.mozilla.org/2014/09/webapplate-maintainable-web-app-template-for-firefox-os-and-chrome-apps/) from hacks.mozilla.org.
+1. Install [node.js](http://www.nodejs.org) or [io.js](https://iojs.org/en/index.html)
+2. Install useful command-line tools globally:
 
-## Get the template
+    ```
+    $ npm install -g bower karma
+    ```
+    
+   To fetch dependent packages, enter the iris folder and run
+   
+    ```
+    $ npm install
+    ```
+    
+   To bind the git pre-commit code style check, run command:
+   
+    ```
+    $ gulp githooks
+    ```
+    
+   Now you are all set. The above instructions only need to be executed once.
+   
+3. If you are edit code, run command:
 
-You can use git command to **clone** Webapplate:
+    ```
+    $ gulp test
+    ```
+    
+   To automaticly monitor and trigger all test when you change the code.
 
+### [Kaldi](http://kaldi-asr.org/) deep neural network server
+
+In this section we will explain how to start up a [kaldi](http://kaldi-asr.org/) deep neural network server.
+
+#### Starting an EC2 instance
+
+The [kaldi](http://kaldi-asr.org/) server is based off of the Amazon AMI __kaldi-gstreamer-server-kaldinnet2onlinedecoder__. This image employs the [kaldi](http://kaldi-asr.org/) DNN engine and a model trained off of the [TED-LIUM Corpus](http://www-lium.univ-lemans.fr/en/content/ted-lium-corpus).
+
+The arcitecture of the [kaldi](http://kaldi-asr.org/) server calls for a single master node and one, or more, worker nodes. A worker node may be on the same physical hardware as the master, or can be located on another physical node. As we want to keep things simple in this demo, we will have a master node and a single worker node, and both the master and worker will reside on the same physical hardware.
+
+So, to start the one, and only, [kaldi](http://kaldi-asr.org/) server, one starts an EC2 instance based on the AMI __kaldi-gstreamer-server-kaldinnet2onlinedecoder__. This instance should have an [NVIDIA](www.nvidia.com) GPU, as the deep neural network employs [CUDA](http://www.nvidia.com/object/cuda_home_new.html). Furthermore, this instance should be accessable via port 8888.
+
+#### Starting the master process
+
+Once the instance is up and running, we need to start the master process. This is accomplished through the following steps.
+
+First, ```ssh``` into the machine. Once that is done ```cd``` to the appropriate directory
 ```
-$ git clone https://github.com/webapplate/webapplate.git
+ ubuntu@ip-172-31-23-169:~$cd kaldi-gstreamer-server
+ ```
+ After one is in the appropriate directory, one can start the main process as follows
+ ```
+ ubuntu@ip-172-31-23-169:~/kaldi-gstreamer-server$python kaldigstserver/master_server.py --port=8888
+ ```
+ That is all there is to it. The main process is now started.
+ 
+#### Starting the worker process
+
+Once the master process is up and running, we need to start a worker. Again, the first step is to ```ssh``` into the machine. Then ```cd``` to the appropriate directory
 ```
+ ubuntu@ip-172-31-23-169:~$cd kaldi-gstreamer-server
+ ```
+ Now one can start a worker process as follows
+ ```
+ ubuntu@ip-172-31-23-169:~/kaldi-gstreamer-server$python kaldigstserver/worker.py -u ws://localhost:8888/worker/ws/speech -c sample_english_nnet2.yaml
+ ```
 
-Or click 'ZIP' button on [github](https://github.com/webapplate/webapplate) to **download** the template.
-
-## Demos
-
-Here are some examples that start the development by webapplate:
-
-* [WebbyMouse](https://github.com/gasolin/webbymouse) Touchpad & Air mouse with full web technology (Desktop + Web App)
-* [Lookfor](http://jsfiddle.net/gasolin/d2z8gnm6/) (Web App)
-* [BMI](http://jsfiddle.net/gasolin/88ccfwLr/) (Web App)
-* [Tomodoro](http://jsfiddle.net/gasolin/d0hb39oo/) (Web App)
-* [BeautyClock](http://jsfiddle.net/gasolin/LeLs1dk8/) (Web App)
-* [Author's homepage](http://www.gasolin.idv.tw/) (Web page)
-
-## What is webapplate?
-
-Webapplate is the Mobile First, full stack web app template/boilerplate that curated several libraries to help you quickly start a maintainable mobile web app development process. Webapplate enable you to optimized and export your web app to hosting server, Firefox/Chrome webapp store, or even Android, iOS, and more platforms.
-
-When you first time running, webapplate provide you a material-designed web app frame.
-
-![Real welcome page](http://i.imgur.com/8AGwXCG.png)
-
-
-### Application Structure
-
-All applications follow the same set of guidelines as far as how code is formatted, build, and structured. A typical app looks like this:
-
-* **public/** - The application runtime code.
-* **public/manifest.webapp** - The application manifest.
-* **public/js/** - All javascript for your app. This code is converted during the build step using Babel, and should be using es6 modules.
-* **public/style/** - Stylesheets for the app. This code is converted during the build step using cssnext, to support css variable and more emerging CSS specs.
-* **public/*** - Dotfiles and metadata for packagers such as bower, npm, etc.
+current version: v4.0.5
 
 ### Key Technologies
 
@@ -64,13 +86,7 @@ All applications follow the same set of guidelines as far as how code is formatt
 * **Babel** - So we can leverage es6 modules and classes today.
 * **CssNext** - So we can leverage new CSS specs today.
 
-## Why need webapplate?
-
-Though there are many powerful tools surround web technologies, web does not provide the `SDK` or ready to use `template` that just like Android or iOS. Web apps are simple to write but hard to get done right. Developer who wants to quickly build an web app usually consume much longer time to make their web app right.
-
-Thus developer who is approaching to the `web app`(make web site behaves like mobile app) concept need a bootstrap or template project to start with. That's why webapplate comes.
-
-## What kind of web app webapplate supports?
+## What kind of web apps does iris support?
 
 * **static hosting** web app
 * **dynamic** web app with node.js/express backend
@@ -83,20 +99,7 @@ To build the deployable web app, run command:
   $ npm run static|dynamic|pack|cordova|github
   ```
 
-   Choose one of the above [npm command](https://github.com/webapplate/webapplate/blob/master/package.json) based on your needs.
-
-## How does webapplate do
-
-Webapplate provide full HTML5 development experience, use javascript to rule frontend, backend, build and test.
-
-Webapplate provide a ready-to-deploy project bootstrap settings for both `hosted` (dynamic/static website) and `packaged` (no server) web app, with convention of file structure, [express](http://expressjs.com/) server-side support, and preconfigured helper tools like code style check, appcache generator, multi-locales and testframework.
-
-Website inherit from Webapplate can be [deployed to any host provider](https://github.com/webapplate/webapplate/wiki/Deployment).
-
-All magics are well integrated and configurable.
-
-![Webapplate Functionality](http://i.imgur.com/r069BsG.png)
-
+   Choose one of the above [npm command](https://github.com/kdavis-mozilla/iris/blob/master/package.json) based on your needs.
 
 ## Tools Used:
 
@@ -141,6 +144,12 @@ __Client side libraries__
 - __Browser polyfill__
   - [localforage](https://github.com/mozilla/localForage) enhanced offline storage API
   - [fetch](https://github.com/github/fetch) replacement of XMLHTTPRequest
+
+- __Commincation with the Kaldi Server__
+  - [dictatemp3.js](https://github.com/kdavis-mozilla/dictatemp3.js) STT using the kaldi-gstreamer-server
+
+- __Question Answering__
+  - [api-ai-javascript](https://github.com/api-ai/api-ai-javascript) Question answering using the api-ai server
 
 ## License
 
