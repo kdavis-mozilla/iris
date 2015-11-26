@@ -78,6 +78,12 @@ Once the master process is up and running, we need to start a worker. Again, the
 
 current version: v4.0.5
 
+### Setting up api-ai
+
+WIP
+
+## General Info
+
 ### Key Technologies
 
 * **Bower** - For library and app dependency management.
@@ -86,7 +92,7 @@ current version: v4.0.5
 * **Babel** - So we can leverage es6 modules and classes today.
 * **CssNext** - So we can leverage new CSS specs today.
 
-## What kind of web apps does iris support?
+### What kind of web apps does iris support?
 
 * **static hosting** web app
 * **dynamic** web app with node.js/express backend
@@ -101,7 +107,7 @@ To build the deployable web app, run command:
 
    Choose one of the above [npm command](https://github.com/kdavis-mozilla/iris/blob/master/package.json) based on your needs.
 
-## Tools Used:
+### Tools Used:
 
 __Package Management__
 - [npm](https://www.npmjs.com/) Node Package manager
@@ -151,7 +157,7 @@ __Client side libraries__
 - __Question Answering__
   - [api-ai-javascript](https://github.com/api-ai/api-ai-javascript) Question answering using the api-ai server
 
-## License
+### License
 
 [The MIT License](http://opensource.org/licenses/MIT)
 
