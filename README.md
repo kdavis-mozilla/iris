@@ -39,7 +39,7 @@ This is a demo webapp that uses a server based [kaldi](http://kaldi-asr.org/) de
     
    To automaticly monitor and trigger all test when you change the code.
 
-### [Kaldi](http://kaldi-asr.org/) deep neural network server
+### Setting up Kaldi
 
 In this section we will explain how to start up a [kaldi](http://kaldi-asr.org/) deep neural network server.
 
