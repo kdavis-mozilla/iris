@@ -43,11 +43,9 @@ This is a demo webapp that uses a server based [kaldi](http://kaldi-asr.org/) de
 
 In this section we will explain how to start up a [kaldi](http://kaldi-asr.org/) deep neural network server.
 
-#### Starting an EC2 instance
-
 The [kaldi](http://kaldi-asr.org/) server is based off of the Amazon AMI __kaldi-dnn__. This image employs the [kaldi](http://kaldi-asr.org/) DNN engine and a model trained off of the [TED-LIUM Corpus](http://www-lium.univ-lemans.fr/en/content/ted-lium-corpus).
 
-The arcitecture of the [kaldi](http://kaldi-asr.org/) server calls for a single master node and one, or more, worker nodes. A worker node may be on the same physical hardware as the master, or can be located on another physical node. As we want to keep things simple in this demo we will have a master node and four worker nodes all on the same physical hardware. To simplify setup, the master node and four worker nodes will be started on boot when using the Amazon AMI __kaldi-dnn__.
+The arcitecture of the [kaldi](http://kaldi-asr.org/) server calls for a single master node and one, or more, worker nodes. A worker node may be on the same physical hardware as the master, or can be located on another physical node. As we want to keep things simple in this demo, we will have a master node and four worker nodes all on the same physical hardware. Simplifing setup, the the Amazon AMI __kaldi-dnn__ is configured to have the master node and four worker nodes start on boot. Thus, all you need do is start an instance using the Amazon AMI __kaldi-dnn__.
 
 So, to start a [kaldi](http://kaldi-asr.org/) server, one starts an EC2 instance based on the AMI __kaldi-dnn__. This instance should have an [NVIDIA](www.nvidia.com) GPU, as the deep neural network employs [CUDA](http://www.nvidia.com/object/cuda_home_new.html). Furthermore, this instance should be accessable via port 8888, which can be accomplished through configuration of its security group. A reasonable instance type to choose is __g2.2xlarge__.
 
