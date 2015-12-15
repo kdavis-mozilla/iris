@@ -2,7 +2,7 @@
 
 # iris
 
-Demo WebApp using [kaldi](http://kaldi-asr.org/) DNN STT along with [api.ai](https://api.ai/).
+Demo WebApp using [kaldi](http://kaldi-asr.org/) DNN STT.
 
 This is a demo webapp that uses a server based [kaldi](http://kaldi-asr.org/) deep neural network speech-to-text engine to convert speech to text.
 
@@ -120,9 +120,6 @@ __Client side libraries__
 
 - __Commincation with the Kaldi Server__
   - [dictatemp3.js](https://github.com/kdavis-mozilla/dictatemp3.js) STT using the kaldi-gstreamer-server
-
-- __Question Answering__
-  - [api-ai-javascript](https://github.com/api-ai/api-ai-javascript) Question answering using the api-ai server
 
 ### License
 
