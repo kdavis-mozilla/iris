@@ -4,7 +4,7 @@
 
 Demo WebApp using [kaldi](http://kaldi-asr.org/) DNN STT along with [api.ai](https://api.ai/).
 
-This is a demo webapp that uses a server based [kaldi](http://kaldi-asr.org/) deep neural network speech-to-text engine to convert speech to text, and takes the resulting text and passes it to the [api.ai](https://api.ai/) backend to answer any queries possed by the text.
+This is a demo webapp that uses a server based [kaldi](http://kaldi-asr.org/) deep neural network speech-to-text engine to convert speech to text.
 
 ## Rapid, but not Quick, Setup
 
@@ -45,42 +45,11 @@ In this section we will explain how to start up a [kaldi](http://kaldi-asr.org/)
 
 #### Starting an EC2 instance
 
-The [kaldi](http://kaldi-asr.org/) server is based off of the Amazon AMI __kaldi-gstreamer-server-kaldinnet2onlinedecoder__. This image employs the [kaldi](http://kaldi-asr.org/) DNN engine and a model trained off of the [TED-LIUM Corpus](http://www-lium.univ-lemans.fr/en/content/ted-lium-corpus).
+The [kaldi](http://kaldi-asr.org/) server is based off of the Amazon AMI __kaldi-dnn__. This image employs the [kaldi](http://kaldi-asr.org/) DNN engine and a model trained off of the [TED-LIUM Corpus](http://www-lium.univ-lemans.fr/en/content/ted-lium-corpus).
 
-The arcitecture of the [kaldi](http://kaldi-asr.org/) server calls for a single master node and one, or more, worker nodes. A worker node may be on the same physical hardware as the master, or can be located on another physical node. As we want to keep things simple in this demo, we will have a master node and a single worker node, and both the master and worker will reside on the same physical hardware.
+The arcitecture of the [kaldi](http://kaldi-asr.org/) server calls for a single master node and one, or more, worker nodes. A worker node may be on the same physical hardware as the master, or can be located on another physical node. As we want to keep things simple in this demo we will have a master node and four worker nodes all on the same physical hardware. To simplify setup, the master node and four worker nodes will be started on boot when using the Amazon AMI __kaldi-dnn__.
 
-So, to start the one, and only, [kaldi](http://kaldi-asr.org/) server, one starts an EC2 instance based on the AMI __kaldi-gstreamer-server-kaldinnet2onlinedecoder__. This instance should have an [NVIDIA](www.nvidia.com) GPU, as the deep neural network employs [CUDA](http://www.nvidia.com/object/cuda_home_new.html). Furthermore, this instance should be accessable via port 8888.
-
-#### Starting the master process
-
-Once the instance is up and running, we need to start the master process. This is accomplished through the following steps.
-
-First, ```ssh``` into the machine. Once that is done ```cd``` to the appropriate directory
-```
- ubuntu@ip-172-31-23-169:~$cd kaldi-gstreamer-server
- ```
- After one is in the appropriate directory, one can start the main process as follows
- ```
- ubuntu@ip-172-31-23-169:~/kaldi-gstreamer-server$python kaldigstserver/master_server.py --port=8888
- ```
- That is all there is to it. The main process is now started.
- 
-#### Starting the worker process
-
-Once the master process is up and running, we need to start a worker. Again, the first step is to ```ssh``` into the machine. Then ```cd``` to the appropriate directory
-```
- ubuntu@ip-172-31-23-169:~$cd kaldi-gstreamer-server
- ```
- Now one can start a worker process as follows
- ```
- ubuntu@ip-172-31-23-169:~/kaldi-gstreamer-server$python kaldigstserver/worker.py -u ws://localhost:8888/worker/ws/speech -c sample_english_nnet2.yaml
- ```
-
-current version: v4.0.5
-
-### Setting up api-ai
-
-WIP
+So, to start a [kaldi](http://kaldi-asr.org/) server, one starts an EC2 instance based on the AMI __kaldi-dnn__. This instance should have an [NVIDIA](www.nvidia.com) GPU, as the deep neural network employs [CUDA](http://www.nvidia.com/object/cuda_home_new.html). Furthermore, this instance should be accessable via port 8888, which can be accomplished through configuration of its security group. A reasonable instance type to choose is __g2.2xlarge__.
 
 ## General Info
 
